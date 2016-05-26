@@ -98,7 +98,7 @@ function userFeedback(randomNumber, inputNumber) {
 
     } else if (difference >= 5 && difference <= 9) {
         $('#feedback').text('Very Hot');
-        document.body.style.backgroundColor = 'red';
+        document.body.style.backgroundColor = 'orangered';
 
     } else if (difference >= 1 && difference <= 4) {
         $('#feedback').text('Very Very Hot');
@@ -106,7 +106,7 @@ function userFeedback(randomNumber, inputNumber) {
 
     } else {
         $('#feedback').text('You Won!!');
-        document.body.style.backgroundColor = '#002cb3';
+        document.body.style.backgroundColor = 'orange';
 
     }
 }
