@@ -6,6 +6,9 @@ var randomNumber = Math.floor((Math.random() * 100) + 1);
 // set a global varialbe counter initially with a value of 0
 var counter = 0;
 
+// set a global variable oldGuess to initally be 0 since nothing is inputed yet
+var oldGuess = 0;
+
 
 // step 1: Define Functions
 
@@ -108,6 +111,22 @@ function userFeedback(randomNumber, inputNumber) {
     }
 }
 
+// function to give relative feedback based on how close or far from the actual number you are
+function relativeFeedback(randomNumber, oldGuess, newGuess) {
+    var oldDiff = Math.abs(parseInt(randomNumber) - parseInt(oldGuess));
+    var newDiff = Math.abs(parseInt(randomNumber) - parseInt(newGuess));
+
+    // if oldDifference (lets say 10) is greater thank newDifference(lets say 5) you are closer to the number or hotter
+    if (oldDiff > newDiff) {
+        $('#relative-feedback').text("You Hotter than before!");
+    } else if (newDiff > oldDiff) {
+        $('#relative-feedback').text("You Colder than before!");
+    } else if (oldDiff == newDiff) {
+        $('#relative-feedback').text("You are in the same place as before!");
+    }
+
+}
+
 // function to track how many guesses the user has made. it should apear in span#count which defaults to 0
 function trackGuesses(counter) {
     // Function to count the number of guesses
@@ -145,17 +164,41 @@ $(document).ready(function () {
         //first get the value that user added in the input box
         var guessedNumber = $('#userGuess').val();
 
+        // define the var newGuess to equal guessedNumber before the validateInput function is run
+        var newGuess = guessedNumber;
+
         //validate all the numbers
         validateInput(guessedNumber);
 
+        // run the relativeFeedback fucntion ONLY if oldGuess has some value (after first guess has been inputed by the user) and the input number is between 1 and 100
+        if ((oldGuess !== 0) && (guessedNumber >= 1) && (guessedNumber <= 100)) {
+            relativeFeedback(randomNumber, oldGuess, newGuess);
+        }
+
+        oldGuess = newGuess;
+
     });
+
+
 
 });
 
 $(document).on('keydown', function (key) {
     if (key.keyCode == 13) {
-        var gussedNumber = $('#userGuess').val();
+        //first get the value that user added in the input box
+        var guessedNumber = $('#userGuess').val();
 
-        validateInput(gussedNumber);
+        // define the var newGuess to equal guessedNumber before the validateInput function is run
+        var newGuess = guessedNumber;
+
+        //validate all the numbers
+        validateInput(guessedNumber);
+
+        // run the relativeFeedback fucntion ONLY if oldGuess has some value (after first guess has been inputed by the user) and the input number is between 1 and 100
+        if ((oldGuess !== 0) && (guessedNumber >= 1) && (guessedNumber <= 100)) {
+            relativeFeedback(randomNumber, oldGuess, newGuess);
+        }
+
+        oldGuess = newGuess;
     }
 })
