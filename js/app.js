@@ -76,12 +76,12 @@ function validateInput(inputNumber) {
 /* function to give user feeback about each guess - whether too low, high, or just right. Feedback about the guess
        should appear in div#feedback. by default it is "Make Your Guess" */
 function userFeedback(randomNumber, inputNumber) {
-    // initially we start we setting a var difference to be the difference between random and input Numbers
+    // initially we start by setting a var difference to be the difference between random and input Numbers
     var difference = Math.abs(randomNumber - inputNumber);
 
     // define ranges and replace text for #feeback
     if (difference >= 50) {
-        $('#feedback').text('Very Cold');
+        $('#feedback').text('Very Cold - not even close');
         document.body.style.backgroundColor = '#002cb3';
 
     } else if (difference >= 30 && difference <= 49) {
@@ -100,10 +100,13 @@ function userFeedback(randomNumber, inputNumber) {
         $('#feedback').text('Very Hot');
         document.body.style.backgroundColor = 'orangered';
 
-    } else if (difference >= 1 && difference <= 4) {
+    } else if (difference >= 3 && difference <= 4) {
         $('#feedback').text('Very Very Hot');
         document.body.style.backgroundColor = 'red';
 
+    } else if (difference >= 1 && difference <= 2) {
+        $('#feedback').text('You are almost there - Very Very Very Very Hotttt - boiling');
+        document.body.style.backgroundColor = 'red';
     } else {
         $('#feedback').text('You Won!!');
         document.body.style.backgroundColor = 'orange';
@@ -162,7 +165,7 @@ $(document).ready(function () {
     $('#guessButton').on('click', function () {
 
         //first get the value that user added in the input box
-        var guessedNumber = $('#userGuess').val();
+        var guessedNumbers = $('#userGuess').val();
 
         // define the var newGuess to equal guessedNumber before the validateInput function is run
         var newGuess = guessedNumber;
